@@ -12,3 +12,4 @@ flask
 gunicorn
 PyYAML
 mlflow
+joblib
