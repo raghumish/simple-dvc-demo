@@ -1,11 +1,10 @@
-from src.get_data import read_params
 import argparse
 import mlflow
 from mlflow.tracking import MlflowClient
 from pprint import pprint
 import joblib
 import os
-
+from src.get_data import read_params
 
 def log_production_model(config_path):
     config = read_params(config_path)

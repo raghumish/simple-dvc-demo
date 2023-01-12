@@ -10,6 +10,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import ElasticNet
 from get_data import read_params
+from urllib.parse import urlparse
 import argparse
 import joblib
 import json
@@ -41,6 +42,14 @@ def train_and_evaluate(config_path):
 
     train_x = train.drop(target, axis=1)
     test_x = test.drop(target, axis=1)
+
+################### MLFLOW ###############################
+    mlflow_config = config["mlflow_config"]
+    remote_server_uri = mlflow_config["remote_server_uri"]
+
+    mlflow.set_tracking_uri(remote_server_uri)
+
+    mlflow.set_experiment(mlflow_config["experiment_name"])
 
     with mlflow.start_run(run_name=mlflow_config["run_name"]) as mlops_run:
 
