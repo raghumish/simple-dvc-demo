@@ -68,3 +68,22 @@ build your own package commands-
 ```bash
 python setup.py sdist bdist_wheel
 ```
+
+Create 'artifacts' folder and run Mlflow server command 
+```bash
+mlflow server
+--backend-store-uri sqlite:///mlflow.db
+--default-artifact-root ./artifacts
+--host 0.0.0.0 -p 1234
+```
+
+Find and kill Mlflow process
+```bash
+ps -A | grep gunicorn
+```
+```bash
+kill [PID]
+```
+```bash
+pkill -f gunicorn
+```

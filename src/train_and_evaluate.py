@@ -46,13 +46,13 @@ def train_and_evaluate(config_path):
 ################### MLFLOW ###############################
     mlflow_config = config["mlflow_config"]
     remote_server_uri = mlflow_config["remote_server_uri"]
-
+    print("setting tracking uri", remote_server_uri)
     mlflow.set_tracking_uri(remote_server_uri)
-
+    print("setting experiment", mlflow_config["experiment_name"])
     mlflow.set_experiment(mlflow_config["experiment_name"])
-
+    print("starting run")
     with mlflow.start_run(run_name=mlflow_config["run_name"]) as mlops_run:
-
+        print("run name = ", mlflow_config["run_name"])
         lr = ElasticNet(
             alpha=alpha,
             l1_ratio=l1_ratio,
@@ -70,7 +70,11 @@ def train_and_evaluate(config_path):
         mlflow.log_metric("mae", mae)
         mlflow.log_metric("r2", r2)
 
+        print("parameters")
+
         tracking_url_type_store = urlparse(mlflow.get_artifact_uri()).scheme
+
+        print("tracking uri : ", tracking_url_type_store)
 
         if tracking_url_type_store != "file":
             mlflow.sklearn.log_model(
